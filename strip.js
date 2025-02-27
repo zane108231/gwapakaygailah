@@ -156,45 +156,75 @@ document.addEventListener('DOMContentLoaded', function() {
         
         const selectedStickers = stickers[stickerType] || [];
         
-        // Get the dimensions of the photoStripPreview
-        const containerWidth = photoStripPreview.offsetWidth;
-        const containerHeight = photoStripPreview.offsetHeight;
+        // Get all photos in the strip
+        const photos = photoStripPreview.querySelectorAll('img');
         
-        // Add 10-15 random stickers
-        const numStickers = Math.floor(Math.random() * 6) + 10; // 10-15 stickers
-        
-        for (let i = 0; i < numStickers; i++) {
-            const stickerIndex = Math.floor(Math.random() * selectedStickers.length);
-            const stickerEmoji = selectedStickers[stickerIndex];
+        // For each photo, create a border of stickers
+        photos.forEach((photo) => {
+            // Get photo position and dimensions
+            const photoRect = photo.getBoundingClientRect();
+            const stripRect = photoStripPreview.getBoundingClientRect();
             
-            // Create sticker element
-            const sticker = document.createElement('div');
-            sticker.className = 'sticker';
-            sticker.textContent = stickerEmoji;
-            sticker.style.position = 'absolute';
-            sticker.style.fontSize = (Math.random() * 20 + 20) + 'px'; // Random size 20-40px
+            // Calculate relative position to the photoStripPreview
+            const photoTop = photoRect.top - stripRect.top;
+            const photoLeft = photoRect.left - stripRect.left;
+            const photoWidth = photoRect.width;
+            const photoHeight = photoRect.height;
             
-            // Random position
-            const topPos = Math.random() * containerHeight;
-            const leftPos = Math.random() * containerWidth;
+            // Number of stickers to place around each photo
+            const stickersPerSide = 5; // Adjust as needed
             
-            sticker.style.top = topPos + 'px';
-            sticker.style.left = leftPos + 'px';
-            
-            // Random rotation
-            const rotation = Math.random() * 60 - 30; // -30 to 30 degrees
-            sticker.style.transform = `rotate(${rotation}deg)`;
-            
-            // Make stickers interactive and draggable
-            sticker.style.cursor = 'move';
-            sticker.style.userSelect = 'none';
-            
-            // Add draggable functionality
-            makeDraggable(sticker);
-            
-            // Add to container
-            stickersContainer.appendChild(sticker);
-        }
+            // Create stickers for each side of the photo
+            for (let i = 0; i < stickersPerSide * 4; i++) {
+                const stickerIndex = Math.floor(Math.random() * selectedStickers.length);
+                const stickerEmoji = selectedStickers[stickerIndex];
+                
+                const sticker = document.createElement('div');
+                sticker.className = 'sticker';
+                sticker.textContent = stickerEmoji;
+                sticker.style.position = 'absolute';
+                sticker.style.fontSize = '24px'; // Consistent size
+                
+                // Position stickers around the photo border
+                let posX, posY, rotation;
+                
+                if (i < stickersPerSide) {
+                    // Top border
+                    posX = photoLeft + (i / stickersPerSide) * photoWidth;
+                    posY = photoTop - 10;
+                    rotation = Math.random() * 40 - 20;
+                } else if (i < stickersPerSide * 2) {
+                    // Right border
+                    posX = photoLeft + photoWidth + 5;
+                    posY = photoTop + ((i - stickersPerSide) / stickersPerSide) * photoHeight;
+                    rotation = Math.random() * 40 - 20;
+                } else if (i < stickersPerSide * 3) {
+                    // Bottom border
+                    posX = photoLeft + ((i - stickersPerSide * 2) / stickersPerSide) * photoWidth;
+                    posY = photoTop + photoHeight + 5;
+                    rotation = Math.random() * 40 - 20;
+                } else {
+                    // Left border
+                    posX = photoLeft - 20;
+                    posY = photoTop + ((i - stickersPerSide * 3) / stickersPerSide) * photoHeight;
+                    rotation = Math.random() * 40 - 20;
+                }
+                
+                sticker.style.top = posY + 'px';
+                sticker.style.left = posX + 'px';
+                sticker.style.transform = `rotate(${rotation}deg)`;
+                
+                // Make stickers interactive and draggable
+                sticker.style.cursor = 'move';
+                sticker.style.userSelect = 'none';
+                
+                // Add draggable functionality
+                makeDraggable(sticker);
+                
+                // Add to container
+                stickersContainer.appendChild(sticker);
+            }
+        });
     }
     
     // Make elements draggable

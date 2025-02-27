@@ -84,11 +84,11 @@ function capturePhoto() {
     canvas.width = video.videoWidth;
     canvas.height = video.videoHeight;
 
-    // Draw the video frame to the canvas with applied filter
-    context.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-    // Apply filter style to canvas if needed
+    // Apply filter style to canvas before drawing
     context.filter = getFilterStyle(currentFilter);
+    
+    // Draw the video frame to the canvas with filter applied
+    context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
     // Create image element and add to photo strip
     const photo = new Image();
