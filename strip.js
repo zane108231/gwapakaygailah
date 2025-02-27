@@ -150,7 +150,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 '💖', '✨', '💅', '👑', '🌸', '🦄', '💫', '💎'
             ],
             'cute': [
-                '🐶', '🐱', '🐰', '🦊', '🐻', '🐼', '🦁', '🐨'
+                '🐶', '🐱', '🐰', '🦊', '🐻', '🐼', '🦁', '🐨', '💙', '⭐', '✨'
             ]
         };
         
@@ -159,7 +159,26 @@ document.addEventListener('DOMContentLoaded', function() {
         // Get all photos in the strip
         const photos = photoStripPreview.querySelectorAll('img');
         
-        // For each photo, create a border of stickers
+        // Define fixed positions for stickers (cleaner look)
+        const fixedPositions = [
+            // Top left, top, top right
+            {x: -5, y: -5},
+            {x: 0.5, y: -5},
+            {x: 1.05, y: -5},
+            
+            // Middle left, Middle right
+            {x: -5, y: 0.25},
+            {x: -5, y: 0.75},
+            {x: 1.05, y: 0.25},
+            {x: 1.05, y: 0.75},
+            
+            // Bottom left, bottom, bottom right
+            {x: -5, y: 1.05},
+            {x: 0.5, y: 1.05},
+            {x: 1.05, y: 1.05}
+        ];
+        
+        // For each photo, add stickers at fixed positions
         photos.forEach((photo) => {
             // Get photo position and dimensions
             const photoRect = photo.getBoundingClientRect();
@@ -171,11 +190,12 @@ document.addEventListener('DOMContentLoaded', function() {
             const photoWidth = photoRect.width;
             const photoHeight = photoRect.height;
             
-            // Number of stickers to place around each photo
-            const stickersPerSide = 5; // Adjust as needed
-            
-            // Create stickers for each side of the photo
-            for (let i = 0; i < stickersPerSide * 4; i++) {
+            // Apply stickers at fixed positions
+            fixedPositions.forEach((pos, index) => {
+                // Skip some positions randomly for variation but maintain consistency
+                if (Math.random() < 0.3) return;
+                
+                // Pick a random sticker for each position
                 const stickerIndex = Math.floor(Math.random() * selectedStickers.length);
                 const stickerEmoji = selectedStickers[stickerIndex];
                 
@@ -183,32 +203,20 @@ document.addEventListener('DOMContentLoaded', function() {
                 sticker.className = 'sticker';
                 sticker.textContent = stickerEmoji;
                 sticker.style.position = 'absolute';
-                sticker.style.fontSize = '24px'; // Consistent size
                 
-                // Position stickers around the photo border
-                let posX, posY, rotation;
-                
-                if (i < stickersPerSide) {
-                    // Top border
-                    posX = photoLeft + (i / stickersPerSide) * photoWidth;
-                    posY = photoTop - 10;
-                    rotation = Math.random() * 40 - 20;
-                } else if (i < stickersPerSide * 2) {
-                    // Right border
-                    posX = photoLeft + photoWidth + 5;
-                    posY = photoTop + ((i - stickersPerSide) / stickersPerSide) * photoHeight;
-                    rotation = Math.random() * 40 - 20;
-                } else if (i < stickersPerSide * 3) {
-                    // Bottom border
-                    posX = photoLeft + ((i - stickersPerSide * 2) / stickersPerSide) * photoWidth;
-                    posY = photoTop + photoHeight + 5;
-                    rotation = Math.random() * 40 - 20;
+                // Adjust size based on sticker type
+                if (stickerType === 'girlypop') {
+                    sticker.style.fontSize = '20px';
                 } else {
-                    // Left border
-                    posX = photoLeft - 20;
-                    posY = photoTop + ((i - stickersPerSide * 3) / stickersPerSide) * photoHeight;
-                    rotation = Math.random() * 40 - 20;
+                    sticker.style.fontSize = '22px';
                 }
+                
+                // Calculate position
+                const posX = photoLeft + (pos.x < 0 ? pos.x * 4 : (pos.x > 1 ? photoWidth + 5 : pos.x * photoWidth));
+                const posY = photoTop + (pos.y < 0 ? pos.y * 4 : (pos.y > 1 ? photoHeight + 5 : pos.y * photoHeight));
+                
+                // Apply minimal random rotation for natural look
+                const rotation = Math.random() * 20 - 10;
                 
                 sticker.style.top = posY + 'px';
                 sticker.style.left = posX + 'px';
@@ -217,13 +225,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Make stickers interactive and draggable
                 sticker.style.cursor = 'move';
                 sticker.style.userSelect = 'none';
+                sticker.style.zIndex = '20';
                 
                 // Add draggable functionality
                 makeDraggable(sticker);
                 
                 // Add to container
                 stickersContainer.appendChild(sticker);
-            }
+            });
         });
     }
     
