@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Create a temporary link and trigger download
             const link = document.createElement('a');
-            link.download = 'photo-strip-' + new Date().getTime() + '.png';
+            link.download = 'photostrip-' + new Date().getTime() + '.png';
             link.href = dataUrl;
             link.click();
         });
@@ -137,6 +137,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Clear existing stickers
         if (stickersContainer) {
             stickersContainer.innerHTML = '';
+            stickersContainer.style.pointerEvents = 'auto'; // Make stickers interactive
         }
         
         if (stickerType === 'none') {
@@ -184,8 +185,52 @@ document.addEventListener('DOMContentLoaded', function() {
             const rotation = Math.random() * 60 - 30; // -30 to 30 degrees
             sticker.style.transform = `rotate(${rotation}deg)`;
             
+            // Make stickers interactive and draggable
+            sticker.style.cursor = 'move';
+            sticker.style.userSelect = 'none';
+            
+            // Add draggable functionality
+            makeDraggable(sticker);
+            
             // Add to container
             stickersContainer.appendChild(sticker);
+        }
+    }
+    
+    // Make elements draggable
+    function makeDraggable(element) {
+        let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+        
+        element.onmousedown = dragMouseDown;
+        
+        function dragMouseDown(e) {
+            e = e || window.event;
+            e.preventDefault();
+            // Get the mouse cursor position at startup
+            pos3 = e.clientX;
+            pos4 = e.clientY;
+            document.onmouseup = closeDragElement;
+            // Call a function whenever the cursor moves
+            document.onmousemove = elementDrag;
+        }
+        
+        function elementDrag(e) {
+            e = e || window.event;
+            e.preventDefault();
+            // Calculate the new cursor position
+            pos1 = pos3 - e.clientX;
+            pos2 = pos4 - e.clientY;
+            pos3 = e.clientX;
+            pos4 = e.clientY;
+            // Set the element's new position
+            element.style.top = (element.offsetTop - pos2) + "px";
+            element.style.left = (element.offsetLeft - pos1) + "px";
+        }
+        
+        function closeDragElement() {
+            // Stop moving when mouse button is released
+            document.onmouseup = null;
+            document.onmousemove = null;
         }
     }
     

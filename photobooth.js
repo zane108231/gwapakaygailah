@@ -1,3 +1,4 @@
+
 const video = document.getElementById("video");
 const captureButton = document.querySelector(".capture-btn");
 const filterButtons = document.querySelectorAll(".filter-btn");
@@ -8,6 +9,7 @@ let isCooldown = false;
 let currentFilter = "none";
 let photoCount = 0; // Track number of photos taken
 let capturedPhotos = [];
+let autoCaptureInterval = null;
 
 // Request camera access
 navigator.mediaDevices
@@ -66,30 +68,16 @@ captureButton.addEventListener("click", () => {
         return; // Prevent capture if in cooldown state
     }
 
-    isCooldown = true;
+    // Start automatic capture sequence
+    captureButton.textContent = "Capturing...";
+    captureButton.disabled = true;
     captureButton.classList.add("cooldown");
-    captureButton.textContent = "Please wait...";
-
-    startCountdown(); // Start the countdown
-
-    // Set cooldown timer (e.g., 5 seconds)
-    setTimeout(() => {
-        isCooldown = false;
-        captureButton.classList.remove("cooldown");
-        captureButton.textContent = "Start Capture :)";
-        countdownElement.textContent = ""; // Hide the countdown
-    }, 5000);
+    
+    startCountdown(); // Start initial countdown
 });
 
 // Capture the photo
 function capturePhoto() {
-    if (photoCount >= 5) {
-        // Store photos in localStorage and redirect to photo strip
-        localStorage.setItem("capturedPhotos", JSON.stringify(capturedPhotos));
-        window.location.href = "strip.html";
-        return;
-    }
-
     // Create a canvas to capture the video frame
     const canvas = document.createElement("canvas");
     const context = canvas.getContext("2d");
@@ -112,14 +100,24 @@ function capturePhoto() {
     capturedPhotos.push(photo.src); // Store the photo URL
     photoCount++;
 
-    // If 5 photos are captured, redirect
+    countdownElement.textContent = ""; // Clear countdown
+
+    // If 5 photos captured, redirect to strip page
     if (photoCount >= 5) {
+        localStorage.setItem("capturedPhotos", JSON.stringify(capturedPhotos)); // Save to localStorage
         setTimeout(() => {
-            localStorage.setItem(
-                "capturedPhotos",
-                JSON.stringify(capturedPhotos),
-            ); // Save to localStorage
             window.location.href = "strip.html"; // Redirect to strip page
-        }, 2000);
+        }, 1000); // Short delay before redirect
+        return;
     }
+
+    // Otherwise, set up the next photo capture after cooldown
+    isCooldown = true;
+    captureButton.textContent = "Please wait...";
+    
+    // Wait 2 seconds before starting the next countdown
+    setTimeout(() => {
+        isCooldown = false;
+        startCountdown(); // Start countdown for next photo
+    }, 2000);
 }
