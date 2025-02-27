@@ -130,24 +130,46 @@ video {
 }
 
 .photo-strip {
-  margin-top: 30px;
+  margin-top: 0;
   position: absolute;
   right: 30px; /* Position to the side of the video */
   display: flex;
-  flex-direction: column; /* Stack photos vertically */
-  align-items: center; /* Center photos horizontally */
+  flex-direction: column; /* Stack title and strip container vertically */
+  align-items: center; /* Center content horizontally */
+  height: 100%;
 }
 
 .strip-container {
   display: flex;
-  justify-content: center;
-  gap: 15px;
-  flex-wrap: wrap;
+  flex-direction: column; /* Stack photos vertically */
+  gap: 10px;
+  max-height: 350px; /* Match video container height */
+  overflow-y: auto; /* Add scrolling if many photos */
+  padding: 10px;
+  background-color: white;
+  border: 2px solid black;
+  border-radius: 10px;
 }
 
 .strip-container img {
-  width: 100px;
-  height: 150px;
+  width: 80px;
+  height: 120px;
   object-fit: cover;
   border-radius: 5px;
+  border: 2px solid #ffddee;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  transform: rotate(-2deg);
+  transition: transform 0.2s;
+}
+
+.strip-container img:hover {
+  transform: rotate(0deg) scale(1.05);
+}
+
+/* Alternate rotation for every second image */
+.strip-container img:nth-child(even) {
+  transform: rotate(2deg);
+}
+.strip-container img:nth-child(even):hover {
+  transform: rotate(0deg) scale(1.05);
 }
