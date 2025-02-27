@@ -1,0 +1,150 @@
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  background: radial-gradient(circle, #ffddee, #fff);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* Navbar */
+nav {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+  width: 100%;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  background: white;
+  padding: 10px 30px;
+  border-radius: 20px;
+}
+
+nav ul li {
+  margin: 0 15px;
+}
+
+nav ul li a {
+  text-decoration: none;
+  font-weight: 500;
+  color: black;
+  padding: 8px 15px;
+  border-radius: 20px;
+}
+
+/* Main container for video, countdown, and filters */
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  flex: 1;
+  width: 100%;
+}
+
+/* Container to hold the video and timer */
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+/* Video Area */
+.video-container {
+  width: 500px;
+  height: 350px;
+  background: pink;
+  margin: 20px;
+  border: 2px solid black;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Countdown Timer */
+.countdown-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  color: red;
+  font-weight: 700;
+  width: 50px;
+  height: 50px;
+  border: 2px solid white;
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+/* Capture Button */
+.capture-btn {
+  display: block;
+  margin: 20px auto;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border: 2px solid black;
+  background: white;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+.capture-btn.cooldown {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+/* Filters */
+.filters {
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
+}
+
+.filter-btn {
+  border: 2px solid black;
+  background: white;
+  padding: 5px 15px;
+  border-radius: 20px;
+  margin: 0 5px;
+  cursor: pointer;
+}
+
+.photo-strip {
+  margin-top: 30px;
+  position: absolute;
+  right: 30px; /* Position to the side of the video */
+  display: flex;
+  flex-direction: column; /* Stack photos vertically */
+  align-items: center; /* Center photos horizontally */
+}
+
+.strip-container {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.strip-container img {
+  width: 100px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 5px;
+}
