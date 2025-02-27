@@ -1,52 +1,60 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Photobooth</title>
-    <link rel="stylesheet" href="photobooth.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
-</head>
-<body>
-    <nav>
-        <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="#">Privacy Policy</a></li>
-            <li><a href="#">Contact</a></li>
-        </ul>
-    </nav>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Photobooth</title>
+        <link rel="stylesheet" href="photobooth.css" />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap"
+            rel="stylesheet"
+        />
+    </head>
+    <body>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
 
-    <main>
-        <div class="container">
-            <!-- Video Container -->
-            <div class="video-container">
-                <video id="video" autoplay></video>
-                <!-- Countdown Timer -->
-                <div class="countdown-container">
-                    <span id="countdown"></span>
+        <main>
+            <div class="container">
+                <!-- Video Container -->
+                <div class="video-container">
+                    <video id="video" autoplay></video>
+                    <!-- Countdown Timer -->
+                    <div class="countdown-container">
+                        <span id="countdown"></span>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <button class="capture-btn">Start Capture :)</button>
-        <p>Choose a filter before starting capture!</p>
-        <div class="filters">
-            <button class="filter-btn" data-filter="none">No Filter</button>
-            <button class="filter-btn" data-filter="grayscale">Grayscale</button>
-            <button class="filter-btn" data-filter="sepia">Sepia</button>
-            <button class="filter-btn" data-filter="vintage">Vintage</button>
-            <button class="filter-btn" data-filter="soft">Soft</button>
-        </div>
-
-        <!-- Photo Strip -->
-        <div class="photo-strip">
-            <h3>Your Photos:</h3>
-            <div id="photoStrip" class="strip-container">
-                <!-- Photos will appear here -->
+            <button class="capture-btn">Start Capture :)</button>
+            <p>Choose a filter before starting capture!</p>
+            <div class="filters">
+                <button class="filter-btn" data-filter="none">No Filter</button>
+                <button class="filter-btn" data-filter="grayscale">
+                    Grayscale
+                </button>
+                <button class="filter-btn" data-filter="sepia">Sepia</button>
+                <button class="filter-btn" data-filter="vintage">
+                    Vintage
+                </button>
+                <button class="filter-btn" data-filter="soft">Soft</button>
+                <button class="filter-btn" data-filter="mirror">Mirror</button>
             </div>
-        </div>
-    </main>
 
-    <script src="photobooth.js"></script>
-</body>
+            <!-- Photo Strip -->
+            <div class="photo-strip">
+                <h3>Your Photos:</h3>
+                <div id="photoStrip" class="strip-container">
+                    <!-- Photos will appear here -->
+                </div>
+            </div>
+        </main>
+
+        <script src="photobooth.js"></script>
+    </body>
 </html>

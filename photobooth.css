@@ -132,19 +132,25 @@ video {
 .photo-strip {
   margin-top: 0;
   position: absolute;
-  right: 30px; /* Position to the side of the video */
+  right: 30px;
+  /* Position to the side of the video */
   display: flex;
-  flex-direction: column; /* Stack title and strip container vertically */
-  align-items: center; /* Center content horizontally */
+  flex-direction: column;
+  /* Stack title and strip container vertically */
+  align-items: center;
+  /* Center content horizontally */
   height: 100%;
 }
 
 .strip-container {
   display: flex;
-  flex-direction: column; /* Stack photos vertically */
+  flex-direction: column;
+  /* Stack photos vertically */
   gap: 10px;
-  max-height: 350px; /* Match video container height */
-  overflow-y: auto; /* Add scrolling if many photos */
+  max-height: 350px;
+  /* Match video container height */
+  overflow-y: auto;
+  /* Add scrolling if many photos */
   padding: 10px;
   background-color: white;
   border: 2px solid black;
@@ -157,7 +163,7 @@ video {
   object-fit: cover;
   border-radius: 5px;
   border: 2px solid #ffddee;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   transform: rotate(-2deg);
   transition: transform 0.2s;
 }
@@ -170,6 +176,243 @@ video {
 .strip-container img:nth-child(even) {
   transform: rotate(2deg);
 }
+
 .strip-container img:nth-child(even):hover {
   transform: rotate(0deg) scale(1.05);
+}
+
+/* Mobile-specific styles */
+@media (max-width: 768px) {
+  body {
+    height: auto;
+    min-height: 100vh;
+  }
+
+  .video-container {
+    width: 90%;
+    max-width: 500px;
+    margin: 10px auto;
+  }
+
+  .photo-strip {
+    position: static;
+    width: 90%;
+    max-width: 500px;
+    margin: 20px auto;
+    height: auto;
+  }
+
+  .strip-container {
+    flex-direction: row;
+    overflow-x: auto;
+    max-height: none;
+    width: 100%;
+    justify-content: flex-start;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .filters {
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 15px auto;
+    width: 90%;
+  }
+}
+
+/* Camera loading and status styles */
+.camera-loading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  border-radius: 10px;
+  z-index: 10;
+}
+
+.camera-loading .loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #ff69b4;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 15px;
+}
+
+.camera-loading p {
+  margin: 10px 0;
+  font-size: 16px;
+}
+
+.camera-loading .error-icon {
+  font-size: 40px;
+  margin-bottom: 15px;
+}
+
+.camera-loading .error-message {
+  color: #ff4444;
+  margin-bottom: 15px;
+}
+
+.camera-loading .help-text {
+  color: #999;
+  font-size: 14px;
+  max-width: 80%;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.camera-loading .retry-button {
+  background: #ff69b4;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  margin-top: 15px;
+  transition: background-color 0.2s;
+}
+
+.camera-loading .retry-button:hover {
+  background: #ff8dc7;
+}
+
+.camera-status {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #ff4444;
+  z-index: 5;
+}
+
+.camera-status.active {
+  background: #4CAF50;
+  box-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+}
+
+.reload-camera {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: white;
+  border: 2px solid black;
+  padding: 8px 15px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  transition: all 0.2s;
+  z-index: 5;
+}
+
+.reload-camera:hover {
+  transform: scale(1.05);
+}
+
+.countdown {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 100px;
+  color: white;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  z-index: 5;
+  animation: countdownPulse 1s infinite;
+}
+
+@keyframes countdownPulse {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  50% {
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+/* Disabled button styles */
+.capture:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* iOS-specific styles */
+.tap-to-start {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+.tap-message {
+  text-align: center;
+  color: white;
+  padding: 20px;
+}
+
+.tap-message span {
+  font-size: 40px;
+  display: block;
+  margin-bottom: 10px;
+  animation: pulse 2s infinite;
+}
+
+.tap-message p {
+  font-size: 18px;
+  margin: 0;
+  font-weight: 500;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.1);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Make sure video fills container on iOS */
+video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform-origin: center;
+}
+
+/* iOS playsinline support */
+video[playsinline] {
+  -webkit-transform-origin: center;
+  object-fit: cover;
+  -webkit-object-fit: cover;
 }
