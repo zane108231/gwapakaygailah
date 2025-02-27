@@ -221,6 +221,18 @@ h3, h4 {
     transform: scale(1.05);
 }
 
+/* Stickers styling */
+.stickers-container {
+    pointer-events: none;
+    z-index: 10;
+}
+
+.sticker {
+    position: absolute;
+    user-select: none;
+    z-index: 15;
+}
+
 /* Responsive styling */
 @media (max-width: 768px) {
     .action-buttons {

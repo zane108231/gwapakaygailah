@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     let selectedColor = 'white';
     let selectedSticker = 'none';
+    let stickersContainer = null;
     
     // Load photos from localStorage
     function loadPhotos() {
@@ -30,6 +31,18 @@ document.addEventListener('DOMContentLoaded', function() {
             img.alt = 'Photo Strip Image';
             photoStripPreview.appendChild(img);
         });
+        
+        // Create a container for stickers
+        stickersContainer = document.createElement('div');
+        stickersContainer.className = 'stickers-container';
+        stickersContainer.style.position = 'absolute';
+        stickersContainer.style.top = '0';
+        stickersContainer.style.left = '0';
+        stickersContainer.style.width = '100%';
+        stickersContainer.style.height = '100%';
+        stickersContainer.style.pointerEvents = 'none'; // Allow clicks to pass through
+        photoStripPreview.style.position = 'relative'; // Ensure stickers are positioned correctly
+        photoStripPreview.appendChild(stickersContainer);
     }
     
     // Initialize the preview
@@ -64,7 +77,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // Update the selected sticker
             selectedSticker = this.getAttribute('data-sticker');
             
-            // Apply stickers logic would go here
+            // Apply stickers
             applyStickers(selectedSticker);
         });
     });
@@ -76,17 +89,17 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Download photo strip button
     downloadBtn.addEventListener('click', function() {
-        // This is a simplified version. In a real app, you'd want to use html2canvas
-        // or another method to capture the entire strip with applied styles
-        alert('Download feature would save the customized photo strip');
-        
-        // For a simple implementation:
-        const link = document.createElement('a');
-        link.download = 'photo-strip.png';
-        // This is just a placeholder. You'd need to create a composite image
-        // of all photos with the selected frame and stickers
-        link.href = document.querySelector('#photoStripPreview img').src;
-        link.click();
+        // Use html2canvas to capture the entire photoStripPreview
+        html2canvas(photoStripPreview).then(canvas => {
+            // Convert the canvas to a data URL
+            const dataUrl = canvas.toDataURL('image/png');
+            
+            // Create a temporary link and trigger download
+            const link = document.createElement('a');
+            link.download = 'photo-strip-' + new Date().getTime() + '.png';
+            link.href = dataUrl;
+            link.click();
+        });
     });
     
     // Send to email button
@@ -121,10 +134,59 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     function applyStickers(stickerType) {
-        // This would implement the sticker application logic
-        console.log(`Applying ${stickerType} stickers`);
-        // This is just a placeholder. In a real app, you would add sticker elements
-        // to the photoStripPreview container
+        // Clear existing stickers
+        if (stickersContainer) {
+            stickersContainer.innerHTML = '';
+        }
+        
+        if (stickerType === 'none') {
+            return; // No stickers to apply
+        }
+        
+        // Define sticker images for each type
+        const stickers = {
+            'girlypop': [
+                '💖', '✨', '💅', '👑', '🌸', '🦄', '💫', '💎'
+            ],
+            'cute': [
+                '🐶', '🐱', '🐰', '🦊', '🐻', '🐼', '🦁', '🐨'
+            ]
+        };
+        
+        const selectedStickers = stickers[stickerType] || [];
+        
+        // Get the dimensions of the photoStripPreview
+        const containerWidth = photoStripPreview.offsetWidth;
+        const containerHeight = photoStripPreview.offsetHeight;
+        
+        // Add 10-15 random stickers
+        const numStickers = Math.floor(Math.random() * 6) + 10; // 10-15 stickers
+        
+        for (let i = 0; i < numStickers; i++) {
+            const stickerIndex = Math.floor(Math.random() * selectedStickers.length);
+            const stickerEmoji = selectedStickers[stickerIndex];
+            
+            // Create sticker element
+            const sticker = document.createElement('div');
+            sticker.className = 'sticker';
+            sticker.textContent = stickerEmoji;
+            sticker.style.position = 'absolute';
+            sticker.style.fontSize = (Math.random() * 20 + 20) + 'px'; // Random size 20-40px
+            
+            // Random position
+            const topPos = Math.random() * containerHeight;
+            const leftPos = Math.random() * containerWidth;
+            
+            sticker.style.top = topPos + 'px';
+            sticker.style.left = leftPos + 'px';
+            
+            // Random rotation
+            const rotation = Math.random() * 60 - 30; // -30 to 30 degrees
+            sticker.style.transform = `rotate(${rotation}deg)`;
+            
+            // Add to container
+            stickersContainer.appendChild(sticker);
+        }
     }
     
     function isValidEmail(email) {
