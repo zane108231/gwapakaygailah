@@ -1,0 +1,229 @@
+
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: radial-gradient(circle, #ffddee, #fff);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* Navbar */
+nav {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    width: 100%;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    background: white;
+    padding: 10px 30px;
+    border-radius: 20px;
+    margin: 0;
+}
+
+nav ul li {
+    margin: 0 15px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    font-weight: 500;
+    color: black;
+    padding: 8px 15px;
+    border-radius: 20px;
+}
+
+/* Main content */
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 1000px;
+    padding: 0 20px;
+}
+
+h2 {
+    font-weight: 700;
+    margin-top: 0;
+}
+
+h3, h4 {
+    font-weight: 500;
+    text-align: center;
+    margin: 10px 0;
+}
+
+/* Customize section */
+.customize-section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.options-section {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 600px;
+}
+
+.option-group {
+    margin-bottom: 20px;
+}
+
+/* Color options */
+.color-options, .sticker-options {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
+
+.color-btn, .sticker-btn {
+    padding: 8px 16px;
+    border-radius: 20px;
+    border: 2px solid black;
+    background-color: white;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    transition: all 0.2s;
+}
+
+.color-btn:hover, .sticker-btn:hover {
+    transform: scale(1.05);
+}
+
+.color-btn.active, .sticker-btn.active {
+    background-color: black;
+    color: white;
+}
+
+/* Color specific buttons */
+.color-btn.white {
+    background-color: white;
+}
+.color-btn.black {
+    background-color: black;
+    color: white;
+}
+.color-btn.pink {
+    background-color: #ffddee;
+}
+.color-btn.green {
+    background-color: #d1f7c4;
+}
+.color-btn.blue {
+    background-color: #d4f1f9;
+}
+.color-btn.yellow {
+    background-color: #fff8d6;
+}
+.color-btn.purple {
+    background-color: #e6e6fa;
+}
+
+/* Photo strip preview */
+.photo-strip-preview {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 20px 0;
+    max-width: 90%;
+    width: auto;
+    min-width: 300px;
+    transition: background-color 0.3s;
+}
+
+.photo-strip-preview img {
+    width: 100%;
+    max-width: 300px;
+    margin: 5px 0;
+    border-radius: 5px;
+}
+
+/* Action buttons */
+.action-buttons {
+    display: flex;
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.action-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border-radius: 25px;
+    border: 2px solid black;
+    background-color: white;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.action-btn:hover {
+    transform: scale(1.05);
+}
+
+.download-btn {
+    background-color: white;
+}
+
+.new-photos-btn {
+    background-color: white;
+}
+
+/* Email section */
+.email-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin: 20px 0;
+    width: 100%;
+    max-width: 400px;
+}
+
+#emailInput {
+    width: 100%;
+    padding: 10px 15px;
+    border-radius: 25px;
+    border: 2px solid black;
+    font-family: 'Poppins', sans-serif;
+}
+
+.email-btn {
+    padding: 10px 20px;
+    border-radius: 25px;
+    border: 2px solid black;
+    background-color: white;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    transition: all 0.2s;
+}
+
+.email-btn:hover {
+    transform: scale(1.05);
+}
+
+/* Responsive styling */
+@media (max-width: 768px) {
+    .action-buttons {
+        flex-direction: column;
+    }
+}
